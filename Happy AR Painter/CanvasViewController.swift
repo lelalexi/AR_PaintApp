@@ -132,6 +132,7 @@ class CanvasViewController: UIViewController, ARSCNViewDelegate {
     DispatchQueue.main.async {
       // Erase any old cursor shapes
       self.eraseNodes(named: "cursor")
+      
 
       // Create the brush
       let brush = self.createBrush(brushShape: self.brushSettings.shape,
@@ -146,7 +147,11 @@ class CanvasViewController: UIViewController, ARSCNViewDelegate {
 
         if self.brushSettings.isSpinning {
           // Spin the shape continuously around the y-axis
-
+          let rotateAction = SCNAction.rotate(by: 2 * .pi , around: SCNVector3(0, 1, 0), duration: 2)
+          //Repeats the Action forever
+          let rotateForever = SCNAction.repeatForever(rotateAction)
+          //set the Action to the Brush
+          brush.runAction(rotateForever)
         }
       } else {
         // The user IS NOT pressing the “Paint” button
